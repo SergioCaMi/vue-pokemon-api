@@ -1,0 +1,136 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fff176;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  box-sizing: border-box;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card img {
+  max-width: 120px;
+  height: auto;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 150px;
+  margin: 0 auto 1rem;
+  display: block;
+}
+
+.card h3 {
+  font-size: 1.4rem;
+  margin: 0.5rem 0;
+  color: #2c3e50;
+}
+
+.card ul {
+  padding: 0;
+  margin: 0.5rem 0 1rem;
+  list-style: none;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card ul li {
+  background-color: #f1f1f1;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.card p {
+  margin: 0.4rem 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.card p strong {
+  color: #000;
+}
+
+.details-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  /* align-items: center; min-height: 70vh; */
+}
+
+.details {
+  width: 100%;
+  max-width: 500px;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #ffca28;
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #f4b400;
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+}
