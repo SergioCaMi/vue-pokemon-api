@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
+    <title>Pokemon Api con Vue</title>
+    <style>
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .card {
+        border: 1px solid var(--border-color, #e1e4e8);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        background: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .card img {
+        width: 100%;
+        height: auto;
+        max-width: 150px;
+        margin: 0 auto;
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .grid-container {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 576px) {
+        .grid-container {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="app">
+      <main class="pico">
+        <h1>Listado de Pokémon</h1>
+        <div>
+          <input v-model="search" type="text" placeholder="Filtrar por nombre..." id="filterPokemon" />
+        </div>
+
+        <div class="grid-container">
+          <div v-for="pokemon in filterPokemons" :key="pokemon.id" class="card">
+            <div>
+              <img :src="pokemon.sprite" :alt="pokemon.name" />
+            </div>
+            <div>
+              <h3>{{ pokemon.name }}</h3>
+
+              <p><strong>Tipo 1:</strong> {{ pokemon?.type[0] || '—' }}</p>
+              <p><strong>Tipo 2:</strong> {{ pokemon?.type[1] || '—' }}</p>
+              <p>
+                <strong>Evoluciona de:</strong>
+                <span>{{ pokemon.evolvesFrom || '—' }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script type="module">
+      import { createApp, ref, onMounted, computed } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+
+      createApp({
+        setup() {
+          const pokemons = ref([]);
+          const search = ref("");
+
+          onMounted(() => {
+            getInfo();
+          });
+
+          const getInfo = async () => {
+            try {
+              const jsonURL = "./data/pokemon.json";
+              const response = await fetch(jsonURL);
+
+              if (!response.ok) {
+                throw new Error(`Error en la API: ${response.status}`);
+              }
+              const data = await response.json();
+              pokemons.value = data;
+              console.log(data);
+            } catch (error) {
+              console.error("Error al obtener los países:", error);
+            }
+          };
+
+          const filterPokemons = computed(() => {
+            if (search.value) {
+              return pokemons.value.filter(pokemon => pokemon.name.toLowerCase().includes(search.value.toLowerCase()));
+            }
+            return pokemons.value;
+          });
+
+          return {
+            getInfo,
+            pokemons,
+            filterPokemons,
+            search,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
