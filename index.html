@@ -3,30 +3,68 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css" />
     <title>Pokemon Api con Vue</title>
     <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fff176; /* Fondo amarillo */
+        color: #333;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        margin-bottom: 1.5rem;
+        box-sizing: border-box;
+      }
+
       .grid-container {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
-        margin-top: 1rem;
       }
 
       .card {
-        border: 1px solid var(--border-color, #e1e4e8);
+        border: 1px solid #e1e4e8;
         border-radius: 0.5rem;
         padding: 1rem;
         background: #fff;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
       }
 
       .card img {
         width: 100%;
         height: auto;
         max-width: 150px;
-        margin: 0 auto;
+        margin: 0 auto 1rem;
         display: block;
+      }
+
+      h3 {
+        margin: 0.5rem 0;
+        font-size: 1.2rem;
+      }
+
+      p {
+        margin: 0.3rem 0;
+        font-size: 0.95rem;
       }
 
       @media (max-width: 768px) {
@@ -44,7 +82,7 @@
   </head>
   <body>
     <div class="container" id="app">
-      <main class="pico">
+      <main>
         <h1>Listado de Pokémon</h1>
         <div>
           <input v-model="search" type="text" placeholder="Filtrar por nombre..." id="filterPokemon" />
@@ -52,17 +90,20 @@
 
         <div class="grid-container">
           <div v-for="pokemon in filterPokemons" :key="pokemon.id" class="card">
-            <div>
+            <div v-if="">
               <img :src="pokemon.sprite" :alt="pokemon.name" />
             </div>
             <div>
               <h3>{{ pokemon.name }}</h3>
-
-              <p><strong>Tipo 1:</strong> {{ pokemon?.type[0] || '—' }}</p>
-              <p><strong>Tipo 2:</strong> {{ pokemon?.type[1] || '—' }}</p>
+              <ul>
+                <li v-for="(tipo, index) in pokemon.type" :key="index" style="list-style-type: none; ">
+                    {{tipo}}
+                </li>
+              </ul>
+              
               <p>
                 <strong>Evoluciona de:</strong>
-                <span>{{ pokemon.evolvesFrom || '—' }}</span>
+                <span>{{ pokemon.evolvesFrom }}</span>
               </p>
             </div>
           </div>
@@ -77,6 +118,7 @@
         setup() {
           const pokemons = ref([]);
           const search = ref("");
+          const selectedPokemon = ref(null)
 
           onMounted(() => {
             getInfo();
