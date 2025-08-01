@@ -1,6 +1,8 @@
 
 # 🧪 Prueba Técnica Frontend - Listado de Pokémon
 
+[https://sergiocami.github.io/vue-pokemon-api/](https://sergiocami.github.io/vue-pokemon-api/)
+
 Este proyecto es el **frontend** de una prueba técnica realizada en equipo, que consiste en construir una aplicación web que muestre una lista de Pokémon con posibilidad de filtrar y consultar detalles.
 Está desarrollado con **Vue 3** y **CSS** (estilizado personalizado), y se conecta a una **API REST** creada por el equipo de backend con Node.js, Express y MongoDB.
 
