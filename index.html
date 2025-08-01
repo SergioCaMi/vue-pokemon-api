@@ -1,58 +1,51 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pokemon Api con Vue</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="container" id="app">
-      <main>
-        <h1>Listado de Pokémon</h1>
-        <div>
-          <input v-model="search" type="text" placeholder="Filtrar por nombre..." id="filterPokemon" />
-        </div>
-
-        <!-- Lista de pokemons -->
-        <div v-if="!selectedPokemon" class="grid-container">
-          <div v-for="pokemon in filterPokemons" :key="pokemon.id" class="card">
-            <div @click="selectedPokemon=pokemon">
-              <img :src="pokemon.sprite" :alt="pokemon.name" />
-              <p>ID /{{pokemon._id}}</p>
-            </div>
-            <div class="card">
-              <h3>{{ pokemon.name }}</h3>
-              <ul>
-                <li v-for="(tipo, index) in pokemon.type" :key="index">{{tipo}}</li>
-              </ul>
-              <p v-if="pokemon.evolves_from_species">
-                <strong>Evoluciona de: </strong>
-                <span>{{ pokemon.evolves_from_species }}</span>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Detalles del Pokémon -->
-        <div v-else class="details-wrapper">
-          <div class="card details">
-            <img :src="selectedPokemon.sprite" :alt="selectedPokemon.name" />
-            <p>ID /{{selectedPokemon._id}}</p>
-            <h3>{{ selectedPokemon.name }}</h3>
-            <ul>
-              <li v-for="(tipo, index) in selectedPokemon.type" :key="index">{{tipo}}</li>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pokemon Api con Vue</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container" id="app">
+    <main>
+      <h1>Listado de Pokémon</h1>
+      <div>
+        <input v-model="search" type="text" placeholder="Filtrar por nombre..." id="filterPokemon" />
+      </div>
+      <!-- Lista de pokemons -->
+      <div v-if="!selectedPokemon" class="grid-container">
+        <div v-for="pokemon in filterPokemons" :key="pokemon.id" class="card">
+          <div @click="selectedPokemon = pokemon">
+            <img :src="pokemon.sprite" :alt="pokemon.name" class="pokemon-image" />
+            <p class="pokemon-id">ID: {{ pokemon._id }}</p>
+            <h3 class="pokemon-name">{{ pokemon.name }}</h3>
+            <ul class="pokemon-types">
+              <li v-for="(tipo, index) in pokemon.type" :key="index">{{ tipo }}</li>
             </ul>
-            <p v-if="selectedPokemon.evolves_from_species">
-              <strong>Evoluciona de: </strong>
-              <span>{{ selectedPokemon.evolves_from_species }}</span>
+            <p class="pokemon-evolution" v-if="pokemon.evolves_from_species">
+              <strong>Evoluciona de:</strong> {{ pokemon.evolves_from_species }}
             </p>
-            <div class="btn" @click="selectedPokemon= null">Back</div>
           </div>
         </div>
-      </main>
-    </div>
-
-    <script type="module" src="app.js"></script>
-  </body>
+      </div>
+      <!-- Detalles del Pokémon -->
+      <div v-else class="details-wrapper">
+        <div class="card details">
+          <img :src="selectedPokemon.sprite" :alt="selectedPokemon.name" class="pokemon-image" />
+          <p class="pokemon-id">ID: {{ selectedPokemon._id }}</p>
+          <h3 class="pokemon-name">{{ selectedPokemon.name }}</h3>
+          <ul class="pokemon-types">
+            <li v-for="(tipo, index) in selectedPokemon.type" :key="index">{{ tipo }}</li>
+          </ul>
+          <p class="pokemon-evolution" v-if="selectedPokemon.evolves_from_species">
+            <strong>Evoluciona de:</strong> {{ selectedPokemon.evolves_from_species }}
+          </p>
+          <button class="btn" @click="selectedPokemon = null">Back</button>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
 </html>
